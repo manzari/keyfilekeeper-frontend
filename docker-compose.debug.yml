@@ -1,0 +1,12 @@
+version: '3.5'
+services:
+  tombstome-frontend_debug:
+    image: node:12-alpine
+    container_name: tombstone-frontend_debug
+    working_dir: /app
+    command: tail -f /dev/null
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/app
+    stdin_open: true

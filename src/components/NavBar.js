@@ -1,10 +1,23 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import {Nav} from "react-bootstrap";
+import {LinkContainer} from 'react-router-bootstrap'
+import {useLocation} from 'react-router-dom'
 
-const NavBar = () => (
-  <div>
-    <div><Link to="/">Home</Link> <Link to="/imprint">Imprint</Link> <Link to="/counter">Counter</Link></div>
-  </div>
+const NavBar = (props) => (
+        <Nav variant="pills">
+            <ConnectedNavItem link={"/volumes"} name={"Volumes"}/>
+            <ConnectedNavItem link={"/user"} name={"User"}/>
+            {props.isAdmin ? <ConnectedNavItem link={"/admin"} name={"Admin"}/> : null}
+        </Nav>
 )
+
+const ConnectedNavItem = (props) => (
+    <Nav.Item active={(useLocation().pathname === props.link).toString()}>
+        <LinkContainer to={props.link}>
+            <Nav.Link>{props.name}</Nav.Link>
+        </LinkContainer>
+    </Nav.Item>
+)
+
 
 export default NavBar

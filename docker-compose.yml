@@ -7,5 +7,3 @@ services:
     container_name: keyfilekeeper_frontend
     ports:
       - 80:80
-    environment:
-      API_URL: "http://192.168.178.99:8000"

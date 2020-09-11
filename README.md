@@ -6,7 +6,7 @@ Start the docker container used for development and execute the start script to 
 There are many approaches to do so, find an example below.
 ```
 docker-compose -f docker-compose.develop.yml up -d
-docker exec -it keyfilekeeper_frontend_dev bash
+docker exec -it keyfilekeeper_frontend_dev ash
 npm start
 ```
 

@@ -1,13 +1,11 @@
-import React, {useRef} from 'react'
+import React, {useRef, useState} from 'react'
 import {Table, Button, Spinner} from 'react-bootstrap'
 import {MdDelete} from 'react-icons/md'
 import ContentEditable from "react-contenteditable";
+import EditableField from "./EditableField";
 
 
 const ObjectsTable = (props) => {
-
-    const editableFieldsRef = useRef({});
-
     if (
         !props.hasOwnProperty('objectsToDisplay')
         || !Array.isArray(props.objectsToDisplay)
@@ -18,10 +16,8 @@ const ObjectsTable = (props) => {
         return null
     }
 
-
     let tableName = props.objectMeta.name.toLowerCase()
     let actionColumn = (props.hasOwnProperty('deleteAction'))
-
 
     let columns = (meta) => {
         let columns = []
@@ -65,38 +61,26 @@ const ObjectsTable = (props) => {
     }
 
     let field = (objectToDisplay, key, meta) => {
-        let fieldContent = objectToDisplay[key]
         if (meta.editable === true) {
-            let updateRef = (content) => {
-                editableFieldsRef.current = {
-                    ...editableFieldsRef.current,
-                    [key]: {
-                        ...editableFieldsRef.current[key],
-                        [objectToDisplay.id]: content
-                    }
-                }
+            let patchFieldValue = (value) => {
+                props.patchAction({
+                    ...objectToDisplay,
+                    [key]: value
+                })
             }
-            updateRef(fieldContent)
-            fieldContent = (
-                <ContentEditable
-                    html={editableFieldsRef.current[key][objectToDisplay.id]}
-                    onBlur={() => {
-                        objectToDisplay[key] = editableFieldsRef.current[key][objectToDisplay.id]
-                        props.patchAction(objectToDisplay)
-                    }}
-                    onChange={(event) => updateRef(event.target.value)}
-                />
+            return (
+                <td key={tableName + '_item' + objectToDisplay.id + '_key-' + key}>
+                    <EditableField value={objectToDisplay[key]} patchFieldValue={patchFieldValue}/>
+                </td>
             )
         }
         return (
             <td key={tableName + '_item' + objectToDisplay.id + '_key-' + key}>
                 <div style={{
-                    background: 'rgba(255,255,255,0.7)',
-                    backdropFilter: 'blur(5px)',
                     justifyContent: 'center',
                     alignItems: 'center'
                 }}>
-                    {fieldContent}
+                    {objectToDisplay[key]}
                 </div>
             </td>
         )

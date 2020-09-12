@@ -1,5 +1,5 @@
 # Keyfilekeeper Frontend
-This is a react frontend for [keyfilekeeper](https://github.com/manzari/keyfilekeeper).
+This is a react frontend for [keyfilekeeper](https://github.com/manzari/keyfilekeeper-server).
 
 ## Develop
 Start the docker container used for development and execute the start script to bring up the development server.

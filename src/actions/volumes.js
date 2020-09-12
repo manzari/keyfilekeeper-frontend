@@ -30,14 +30,19 @@ export const createVolume = (volume) => (
         types: [
             {
                 type: 'CREATE_VOLUME_REQUEST',
+                meta: {id: volume.id}
             },
             {
                 type: 'CREATE_VOLUME_SUCCESS',
+                meta: {id: volume.id},
                 payload: (action, state, res) => res.json()
             },
             {
                 type: 'CREATE_VOLUME_FAILURE',
-                meta: (action, state, res) => ({httpCode: res.status})
+                meta: (action, state, res) => ({
+                    httpCode: res.status,
+                    meta: {id: volume.id}
+                })
             },
         ]
     })
@@ -59,7 +64,10 @@ export const deleteVolume = (id) => (
             },
             {
                 type: 'DELETE_VOLUME_FAILURE',
-                meta: (action, state, res) => ({httpCode: res.status})
+                meta: (action, state, res) => ({
+                    httpCode: res.status,
+                    id: id
+                })
             }
         ]
     })
@@ -78,11 +86,12 @@ export const patchVolume = (volume) => (
             },
             {
                 type: 'PATCH_VOLUME_SUCCESS',
-                payload: (action, state, res) => res.json()
+                payload: (action, state, res) => res.json(),
+                meta: {id: volume.id}
             },
             {
                 type: 'PATCH_VOLUME_FAILURE',
-                meta: (action, state, res) => ({httpCode: res.status})
+                meta: {id: volume.id}
             }
         ]
     })

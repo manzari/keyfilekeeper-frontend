@@ -85,7 +85,7 @@ const volumesReducer = (state = {}, action) => {
                 ],
                 patchStatus: {
                     ...state.patchStatus,
-                    [action.payload.id]: 'success'
+                    [action.meta.id]: 'success'
                 }
             }
         default:

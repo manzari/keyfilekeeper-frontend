@@ -1,7 +1,7 @@
-import React, {useRef, useState} from 'react'
-import {Table, Button, Spinner} from 'react-bootstrap'
+import React from 'react'
+import {Table, Button, Spinner, DropdownButton, Dropdown} from 'react-bootstrap'
+import {BsXCircle, BsCheckCircle} from 'react-icons/bs'
 import {MdDelete} from 'react-icons/md'
-import ContentEditable from "react-contenteditable";
 import EditableField from "./EditableField";
 
 
@@ -61,26 +61,67 @@ const ObjectsTable = (props) => {
     }
 
     let field = (objectToDisplay, key, meta) => {
-        if (meta.editable === true) {
-            let patchFieldValue = (value) => {
-                props.patchAction({
-                    ...objectToDisplay,
-                    [key]: value
-                })
-            }
+        let tdElementKey = tableName + '_item' + objectToDisplay.id + '_key-' + key
+        let fieldValue = objectToDisplay[key]
+        if (meta.hasOwnProperty('callback')) {
+            fieldValue = meta.callback(objectToDisplay)
+        }
+        if (meta.type === 'dropdown') {
             return (
-                <td key={tableName + '_item' + objectToDisplay.id + '_key-' + key}>
-                    <EditableField value={objectToDisplay[key]} patchFieldValue={patchFieldValue}/>
+                <td key={tdElementKey}>
+                    <DropdownButton id={tdElementKey + 'dropdown'}
+                                    title="Volumes">
+                        {
+                            fieldValue.forEach(
+                                (value, index) => {
+                                    return (<Dropdown.Item href={"#/action-" + index}>{value}</Dropdown.Item>)
+                                }
+                            )
+                        }
+                    </DropdownButton>
+                </td>
+            )
+        }
+        if (meta.type === 'boolean') {
+            let onclick = () => {
+                if (meta.editable === true && meta.hasOwnProperty('patchCallback')) {
+                    meta.patchCallback(objectToDisplay, fieldValue)
+                }
+            }
+            let iconStyle = {marginLeft: '1rem'}
+            return (
+                <td key={tdElementKey}>
+                    {
+                        fieldValue
+                            ? <BsCheckCircle onClick={onclick} style={iconStyle}/>
+                            : <BsXCircle onClick={onclick} style={iconStyle}/>
+                    }
+                </td>
+            )
+        }
+        if (meta.editable === true) {
+            return (
+                <td key={tdElementKey}>
+                    <EditableField
+                        value={fieldValue}
+                        patchFieldValue={
+                            (value) => {
+                                props.patchAction({
+                                    ...objectToDisplay,
+                                    [key]: value
+                                })
+                            }
+                        }/>
                 </td>
             )
         }
         return (
-            <td key={tableName + '_item' + objectToDisplay.id + '_key-' + key}>
+            <td key={tdElementKey}>
                 <div style={{
                     justifyContent: 'center',
                     alignItems: 'center'
                 }}>
-                    {objectToDisplay[key]}
+                    {fieldValue}
                 </div>
             </td>
         )
@@ -116,34 +157,43 @@ const ObjectsTable = (props) => {
         )
     }
 
-    let newButton = (handleButtonClick) => (
-        <div style={{textAlign: 'right', margin: '0 .5rem .5rem 0'}}>
-            <Button
-                onClick={handleButtonClick}
-                disabled={props.createStatus === 'request'}
-            >
-                {
-                    props.createStatus === 'request'
-                        ? <Spinner
-                            as="span"
-                            animation="border"
-                            size="sm"
-                            role="status"
-                            aria-hidden="true"
-                        />
-                        : "New"
-                }
-            </Button>
-        </div>
-    )
+    let newButton = () => {
+        if (!props.hasOwnProperty('createAction')) {
+            return null;
+        }
+        let createParameters = [{}];
+        if (props.hasOwnProperty('emptyObject')) {
+            createParameters = [props.emptyObject];
+        }
+        if (props.hasOwnProperty('createParametersCallback')) {
+            createParameters = props.createParametersCallback();
+        }
+        console.log(createParameters)
+        return (
+            <div style={{textAlign: 'right', margin: '0 .5rem .5rem 0'}}>
+                <Button
+                    onClick={() => props.createAction(...createParameters)}
+                    disabled={props.createStatus === 'request'}
+                >
+                    {
+                        props.createStatus === 'request'
+                            ? <Spinner
+                                as="span"
+                                animation="border"
+                                size="sm"
+                                role="status"
+                                aria-hidden="true"
+                            />
+                            : "New"
+                    }
+                </Button>
+            </div>
+        )
+    }
 
     return (
         <>
-            {
-                props.hasOwnProperty('createAction') && props.hasOwnProperty('emptyObject')
-                    ? newButton(() => props.createAction(props.emptyObject))
-                    : null
-            }
+            {newButton()}
             <Table borderless hover size="sm">
                 <thead>
                 <tr>

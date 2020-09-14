@@ -26,11 +26,24 @@ const initialState = {
         createStatus: '',
         deleteStatus: [],
         patchStatus: []
+    },
+    users: {
+        data: [],
+        status: '',
+        createStatus: '',
+        deleteStatus: [],
+        patchStatus: []
+    },
+    tokens: {
+        data: [],
+        status: '',
+        createStatus: '',
+        deleteStatus: []
     }
 }
 
 const cookieConfig = {
-    'login': { name: 'keyfilekeeper_login' }
+    'login': {name: 'keyfilekeeper_login'}
 };
 
 export default function configureStore() {

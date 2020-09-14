@@ -3,7 +3,7 @@ import {Redirect, Route, Switch} from 'react-router'
 import NoMatch from './components/NoMatch'
 import Login from "./components/Login";
 import Volumes from "./components/Volumes";
-import User from "./components/User";
+import Settings from "./components/Settings";
 import Admin from "./components/Admin";
 
 const Routes = () => {
@@ -12,7 +12,7 @@ const Routes = () => {
             <Redirect exact from='/' to='/volumes'/>
             <Route path="/login" component={Login}/>
             <Route path="/volumes" component={Volumes}/>
-            <Route path="/user" component={User}/>
+            <Route path="/settings" component={Settings}/>
             <Route path="/admin" component={Admin}/>
             <Route component={NoMatch}/>
         </Switch>

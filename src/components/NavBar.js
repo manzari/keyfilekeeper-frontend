@@ -6,7 +6,7 @@ import {useLocation} from 'react-router-dom'
 const NavBar = (props) => (
         <Nav variant="pills">
             <ConnectedNavItem link={"/volumes"} name={"Volumes"}/>
-            <ConnectedNavItem link={"/user"} name={"User"}/>
+            <ConnectedNavItem link={"/settings"} name={"Settings"}/>
             {props.isAdmin ? <ConnectedNavItem link={"/admin"} name={"Admin"}/> : null}
         </Nav>
 )

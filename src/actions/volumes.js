@@ -30,18 +30,15 @@ export const createVolume = (volume) => (
         types: [
             {
                 type: 'CREATE_VOLUME_REQUEST',
-                meta: {id: volume.id}
             },
             {
                 type: 'CREATE_VOLUME_SUCCESS',
-                meta: {id: volume.id},
                 payload: (action, state, res) => res.json()
             },
             {
                 type: 'CREATE_VOLUME_FAILURE',
                 meta: (action, state, res) => ({
                     httpCode: res.status,
-                    meta: {id: volume.id}
                 })
             },
         ]

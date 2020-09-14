@@ -13,7 +13,7 @@ const SecretModal = (props) => {
 
     const handleSave = (event) => {
         event.preventDefault()
-        props.patchAction({id: props.volume.id, secret: newSecret})
+        props.patchAction(newSecret)
         handleClose()
     }
 
@@ -29,10 +29,10 @@ const SecretModal = (props) => {
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>{props.volume.name} Secret</Modal.Title>
+                    <Modal.Title>{props.title}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <h6>Paste your new secret below</h6>
+                    <h6>{props.text}</h6>
                     <input type="textarea"
                            value={newSecret}
                            onChange={(event) => setNewSecret(event.target.value)}

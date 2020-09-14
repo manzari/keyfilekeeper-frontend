@@ -31,7 +31,7 @@ const Volumes = (props) => {
     return (
         <Content>
             <SpinnerOverlay status={props.volumeStatus}/>
-            <h1>Volumes</h1>
+            <h2>Volumes</h2>
             <ObjectsTable
                 objectsToDisplay={props.volumes.sort((a, b) => (b.id - a.id))}
                 objectMeta={{
@@ -42,7 +42,7 @@ const Volumes = (props) => {
                         },
                         name: {
                             column: 'Name',
-                            editable: true
+                            editableString: true
                         },
                         user: {
                             column: 'User'
@@ -59,9 +59,11 @@ const Volumes = (props) => {
                 additionalActions={
                     (volume) =>
                         <SecretModal
-                            volume={volume}
-                            patchAction={(volume) => props.patchVolume(volume)}
+                            object={volume}
+                            patchAction={(secret) => props.patchVolume({id: volume.id, secret: secret})}
                             patchStatus={props.patchStatus}
+                            text={"Paste your new secret below"}
+                            title={volume.name + " Secret"}
                         />
                 }
             />

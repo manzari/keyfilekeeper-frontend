@@ -42,7 +42,7 @@ const Volumes = (props) => {
                         },
                         name: {
                             column: 'Name',
-                            editableString: true
+                            editable: true
                         },
                         user: {
                             column: 'User'
@@ -60,10 +60,10 @@ const Volumes = (props) => {
                     (volume) =>
                         <SecretModal
                             object={volume}
-                            patchAction={(secret) => props.patchVolume({id: volume.id, secret: secret})}
+                            patchAction={(secret) => props.patchVolume({...volume, secret: secret})}
                             patchStatus={props.patchStatus}
-                            text={"Paste your new secret below"}
-                            title={volume.name + " Secret"}
+                            text={"Paste the new secret for \"" + volume.name + "\" below"}
+                            title={"Replace Secret"}
                         />
                 }
             />

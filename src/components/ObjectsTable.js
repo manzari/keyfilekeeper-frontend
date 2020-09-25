@@ -168,7 +168,6 @@ const ObjectsTable = (props) => {
         if (props.hasOwnProperty('createParametersCallback')) {
             createParameters = props.createParametersCallback();
         }
-        console.log(createParameters)
         return (
             <div style={{textAlign: 'right', margin: '0 .5rem .5rem 0'}}>
                 <Button

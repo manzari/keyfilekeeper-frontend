@@ -66,10 +66,10 @@ const Admin = (props) => {
                     (user) =>
                         <SecretModal
                             object={user}
-                            patchAction={(secret) => props.patchUser({username: user.username, password: secret})}
+                            patchAction={(secret) => props.patchUser({...user, password: secret})}
                             patchStatus={props.patchStatus}
-                            text={"Paste your new password below"}
-                            title={user.username + " Password"}
+                            text={"Paste the new password for \"" + user.username + "\" below"}
+                            title={"Replace Password"}
                         />
                 }
             />

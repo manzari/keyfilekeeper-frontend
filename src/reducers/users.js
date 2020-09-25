@@ -30,7 +30,7 @@ const usersReducer = (state = {}, action) => {
             return {
                 ...state,
                 data: [
-                    ...state.data.filter((item) => (item.username !== action.payload.username)),
+                    ...state.data.filter((item) => (item.id !== action.payload.id)),
                     action.payload
                 ],
                 createStatus: 'success'
@@ -40,7 +40,7 @@ const usersReducer = (state = {}, action) => {
                 ...state,
                 deleteStatus: {
                     ...state.deleteStatus,
-                    [action.meta.username]: 'request'
+                    [action.meta.id]: 'request'
                 }
             }
         case 'DELETE_USER_FAILURE':
@@ -48,16 +48,16 @@ const usersReducer = (state = {}, action) => {
                 ...state,
                 deleteStatus: {
                     ...state.deleteStatus,
-                    [action.meta.username]: 'failure'
+                    [action.meta.id]: 'failure'
                 }
             }
         case 'DELETE_USER_SUCCESS':
             return {
                 ...state,
-                data: state.data.filter((item) => (item.username !== action.meta.username)),
+                data: state.data.filter((item) => (item.id !== action.meta.id)),
                 deleteStatus: {
                     ...state.deleteStatus,
-                    [action.meta.username]: 'success'
+                    [action.meta.id]: 'success'
                 }
             }
         case 'PATCH_USER_REQUEST':
@@ -65,7 +65,7 @@ const usersReducer = (state = {}, action) => {
                 ...state,
                 patchStatus: {
                     ...state.patchStatus,
-                    [action.meta.username]: 'request'
+                    [action.meta.id]: 'request'
                 }
             }
         case 'PATCH_USER_FAILURE':
@@ -73,19 +73,19 @@ const usersReducer = (state = {}, action) => {
                 ...state,
                 patchStatus: {
                     ...state.patchStatus,
-                    [action.meta.username]: 'failure'
+                    [action.meta.id]: 'failure'
                 }
             }
         case 'PATCH_USER_SUCCESS':
             return {
                 ...state,
                 data: [
-                    ...state.data.filter((item) => (item.username !== action.payload.username)),
+                    ...state.data.filter((item) => (item.id !== action.payload.id)),
                     action.payload
                 ],
                 patchStatus: {
                     ...state.patchStatus,
-                    [action.meta.username]: 'success'
+                    [action.meta.id]: 'success'
                 }
             }
         default:

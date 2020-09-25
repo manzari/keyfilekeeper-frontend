@@ -1,8 +1,8 @@
 import {createAction} from 'redux-api-middleware'
 
-export const requestTokens = (userId = false) => (
+export const requestTokens = () => (
     createAction({
-        endpoint: window.apiUrl + (userId !== false ? '/user/' + userId : '') + '/tokens',
+        endpoint: window.apiUrl + '/tokens',
         method: 'GET',
         headers: {'Content-Type': 'application/json'},
         types: [
@@ -21,9 +21,42 @@ export const requestTokens = (userId = false) => (
     })
 )
 
-export const createToken = (userId) => (
+export const requestTokenSecret = (id) => (
     createAction({
-        endpoint: window.apiUrl + '/user/' + userId + '/tokens',
+        endpoint: window.apiUrl + '/token/' + id + '/secret',
+        method: 'GET',
+        headers: {'Content-Type': 'application/json'},
+        types: [
+            {
+                type: 'GET_TOKEN_SECRET_REQUEST',
+                meta: {id: id}
+            },
+            {
+                type: 'GET_TOKEN_SECRET_SUCCESS',
+                payload: (action, state, res) => res.json(),
+                meta: {id: id}
+            },
+            {
+                type: 'GET_TOKEN_SECRET_FAILURE',
+                meta: (action, state, res) => ({
+                    id: id,
+                    httpCode: res.status
+                })
+            },
+        ]
+    })
+)
+
+export const cleanTokenSecret = (id) => (
+    {
+        type: 'CLEAN_TOKEN_SECRET',
+        meta: {id: id}
+    }
+)
+
+export const createToken = () => (
+    createAction({
+        endpoint: window.apiUrl + '/tokens',
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({}, null),
@@ -45,9 +78,9 @@ export const createToken = (userId) => (
     })
 )
 
-export const deleteToken = (id, userId) => (
+export const deleteToken = (id) => (
     createAction({
-        endpoint: window.apiUrl + '/user/' + userId + '/token/' + id,
+        endpoint: window.apiUrl + '/token/' + id,
         method: 'DELETE',
         headers: {'Content-Type': 'application/json'},
         types: [

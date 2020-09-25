@@ -16,6 +16,34 @@ const tokensReducer = (state = {}, action) => {
                 data: action.payload,
                 status: 'success'
             }
+        case 'GET_TOKEN_SECRET_REQUEST':
+            return {
+                ...state
+            }
+        case 'GET_TOKEN_SECRET_FAILURE':
+            return {
+                ...state
+            }
+        case 'GET_TOKEN_SECRET_SUCCESS':
+            return {
+                ...state,
+                data: state.data.map((token) => {
+                    if (token.id === action.meta.id) {
+                        token.token = action.payload.token
+                    }
+                    return token
+                })
+            }
+        case 'CLEAN_TOKEN_SECRET':
+            return {
+                ...state,
+                data: state.data.map((token) => {
+                    if (token.id === action.meta.id) {
+                        delete token.token
+                    }
+                    return token
+                })
+            }
         case 'CREATE_TOKEN_REQUEST':
             return {
                 ...state,

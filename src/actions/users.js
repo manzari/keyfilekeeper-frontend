@@ -45,25 +45,25 @@ export const createUser = (user) => (
     })
 )
 
-export const deleteUser = (username) => (
+export const deleteUser = (id) => (
     createAction({
-        endpoint: window.apiUrl + '/user/' + username,
+        endpoint: window.apiUrl + '/user/' + id,
         method: 'DELETE',
         headers: {'Content-Type': 'application/json'},
         types: [
             {
                 type: 'DELETE_USER_REQUEST',
-                meta: {username: username}
+                meta: {id: id}
             },
             {
                 type: 'DELETE_USER_SUCCESS',
-                meta: {username: username}
+                meta: {id: id}
             },
             {
                 type: 'DELETE_USER_FAILURE',
                 meta: (action, state, res) => ({
                     httpCode: res.status,
-                    username: username
+                    id: id
                 })
             }
         ]
@@ -72,23 +72,23 @@ export const deleteUser = (username) => (
 
 export const patchUser = (user) => (
     createAction({
-        endpoint: window.apiUrl + '/user/' + user.username,
+        endpoint: window.apiUrl + '/user/' + user.id,
         method: 'PATCH',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(user, null),
         types: [
             {
                 type: 'PATCH_USER_REQUEST',
-                meta: {username: user.username}
+                meta: {id: user.id}
             },
             {
                 type: 'PATCH_USER_SUCCESS',
                 payload: (action, state, res) => res.json(),
-                meta: {username: user.username}
+                meta: {id: user.id}
             },
             {
                 type: 'PATCH_USER_FAILURE',
-                meta: {username: user.username}
+                meta: {id: user.id}
             }
         ]
     })

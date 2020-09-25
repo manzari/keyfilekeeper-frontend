@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import Volumes from "./components/Volumes";
 import Settings from "./components/Settings";
 import Admin from "./components/Admin";
+import Help from "./components/Help";
 
 const Routes = () => {
     return (
@@ -14,6 +15,7 @@ const Routes = () => {
             <Route path="/volumes" component={Volumes}/>
             <Route path="/settings" component={Settings}/>
             <Route path="/admin" component={Admin}/>
+            <Route path="/help" component={Help}/>
             <Route component={NoMatch}/>
         </Switch>
     )

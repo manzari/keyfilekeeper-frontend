@@ -8,6 +8,7 @@ const NavBar = (props) => (
             <ConnectedNavItem link={"/volumes"} name={"Volumes"}/>
             <ConnectedNavItem link={"/settings"} name={"Settings"}/>
             {props.isAdmin ? <ConnectedNavItem link={"/admin"} name={"Admin"}/> : null}
+            <ConnectedNavItem link={"/help"} name={"Help"}/>
         </Nav>
 )
 

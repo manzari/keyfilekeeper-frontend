@@ -27,6 +27,7 @@ const Settings = (props) => {
         () => {
             requestTokens()
         }, [requestTokens])
+    console.log(props.tokens)
     return (
         <Content>
             <h2>Settings</h2>
@@ -44,11 +45,8 @@ const Settings = (props) => {
                         id: {
                             column: 'Id'
                         },
-                        dateCreated: {
-                            column: 'Created',
-                        },
-                        dateExpired: {
-                            column: 'Expires',
+                        user: {
+                            column: 'Owner'
                         }
                     }
                 }}

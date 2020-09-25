@@ -1,8 +1,9 @@
 import React, {useEffect} from 'react'
 import Content from "./Content";
 import ObjectsTable from "./ObjectsTable";
-import {deleteToken, requestTokens, createToken} from "../actions/tokens";
+import {deleteToken, requestTokens, createToken, requestTokenSecret, cleanTokenSecret} from "../actions/tokens";
 import {connect} from "react-redux";
+import TokenModal from "./TokenModal";
 
 const mapStateToProps = state => ({
     user: state.login.jwt.info,
@@ -13,9 +14,11 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    requestTokens: (userId) => dispatch(requestTokens(userId)),
+    requestTokens: () => dispatch(requestTokens()),
     deleteToken: (id) => dispatch(deleteToken(id)),
-    createToken: (userId) => dispatch(createToken(userId)),
+    createToken: () => dispatch(createToken()),
+    requestTokenSecret: (id) => dispatch(requestTokenSecret(id)),
+    cleanTokenSecret: (id) => dispatch(cleanTokenSecret(id)),
 })
 
 const Settings = (props) => {
@@ -51,8 +54,16 @@ const Settings = (props) => {
                 }}
                 deleteAction={(id) => props.deleteToken(id)}
                 deleteStatus={props.deleteStatus}
-                createAction={() => props.createToken()}
+                createAction={() => props.createToken(props.user.username)}
                 createStatus={props.createStatus}
+                additionalActions={
+                    (token) =>
+                        <TokenModal
+                            token={token}
+                            requestTokenSecret={() => props.requestTokenSecret(token.id)}
+                            cleanTokenSecret={() => props.cleanTokenSecret(token.id)}
+                        />
+                }
             />
         </Content>
     )

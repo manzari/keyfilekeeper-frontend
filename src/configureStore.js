@@ -6,7 +6,7 @@ import {createMiddleware} from "redux-api-middleware";
 import reduxCookiesMiddleware from "redux-cookies-middleware/src";
 import getStateFromCookies from "redux-cookies-middleware/lib/getStateFromCookies";
 import jwtMiddleware from './middlewares/jwtMiddleware'
-import unautorizedMiddleware from "./middlewares/unautorizedMiddleware";
+import unauthorizedMiddleware from "./middlewares/unauthorizedMiddleware";
 
 export const history = createBrowserHistory()
 
@@ -56,7 +56,7 @@ export default function configureStore() {
                 routerMiddleware(history),
                 jwtMiddleware,
                 createMiddleware(),
-                unautorizedMiddleware,
+                unauthorizedMiddleware,
                 reduxCookiesMiddleware(cookieConfig)
             ),
         ),

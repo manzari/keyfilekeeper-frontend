@@ -1,6 +1,6 @@
 import {logout} from "../actions/login";
 
-const unautorizedMiddleware = (store) => (next) => (action) => {
+const unauthorizedMiddleware = (store) => (next) => (action) => {
     if (action.hasOwnProperty('type') && action.type.endsWith('_FAILURE')) {
         if (action.hasOwnProperty('meta') && action.meta.httpCode === 401) {
             store.dispatch(logout())
@@ -8,4 +8,4 @@ const unautorizedMiddleware = (store) => (next) => (action) => {
     }
     next(action);
 };
-export default unautorizedMiddleware;
+export default unauthorizedMiddleware;

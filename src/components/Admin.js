@@ -30,6 +30,7 @@ const Admin = (props) => {
         }, [requestUsers])
     return (
         <Content isAdmin={true}>
+            <SpinnerOverlay status={props.usersStatus}/>
             <h2>Admin Settings</h2>
             <h3>Users</h3>
             <ObjectsTable

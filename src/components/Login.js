@@ -4,6 +4,7 @@ import {login} from '../actions/login'
 import {Form, Button, Col, Row} from "react-bootstrap";
 import {push} from 'connected-react-router'
 import SpinnerOverlay from "./SpinnerOverlay";
+import Content from "./Content";
 
 const mapStateToProps = state => ({
     roles: state.login.jwt.info.roles,
@@ -37,24 +38,30 @@ const Login = (props) => {
     }
 
     return (
-        <Row>
-            <SpinnerOverlay status={props.loginStatus}/>
-            <Col md={{span: 6, offset: 3}} style={{marginTop: "20%"}}>
-                <Form onSubmit={handleSubmit}>
-                    <Form.Group controlId="loginForm_username">
-                        <Form.Label>User</Form.Label>
-                        <Form.Control type="text" placeholder="Enter Username" onChange={handleChange}/>
-                    </Form.Group>
-                    <Form.Group controlId="loginForm_password">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" onChange={handleChange}/>
-                    </Form.Group>
-                    <Button variant="primary" type="submit">
-                        Submit
-                    </Button>
-                </Form>
-            </Col>
-        </Row>
+        <Content>
+            <Row>
+                <SpinnerOverlay status={props.loginStatus}/>
+                <h2>Login</h2>
+                <Col md={{span: 6, offset: 3}} style={{marginTop: "20%"}}>
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group controlId="loginForm_username">
+                            <Form.Label>User</Form.Label>
+                            <Form.Control type="text" placeholder="Enter Username" onChange={handleChange}/>
+                        </Form.Group>
+                        <Form.Group controlId="loginForm_password">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control type="password" placeholder="Password" onChange={handleChange}/>
+                        </Form.Group>
+                        <h6 style={{color: 'red', display: props.loginStatus === 'failure' ? 'block' : 'none'}}>Last
+                            login failed. Check your credentials.</h6>
+                        <Button variant="primary" type="submit">
+                            Submit
+                        </Button>
+                    </Form>
+                </Col>
+            </Row>
+        </Content>
+
     )
 }
 

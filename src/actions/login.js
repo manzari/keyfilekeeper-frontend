@@ -6,7 +6,14 @@ export const login = (username, password) => (
         method: 'POST',
         body: JSON.stringify({username: username, password: password}, null),
         headers: {'Content-Type': 'application/json'},
-        types: ['LOGIN_REQUEST', 'LOGIN_SUCCESS', 'LOGIN_FAILURE']
+        types: [
+            'LOGIN_REQUEST',
+            'LOGIN_SUCCESS',
+            {
+                type: 'LOGIN_FAILURE',
+                meta: (action, state, res) => ({httpCode: res.status})
+            }
+        ],
     })
 )
 

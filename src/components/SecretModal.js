@@ -1,5 +1,4 @@
 import React, {useState} from 'react'
-import {MdVpnKey} from 'react-icons/md'
 import {Button, Modal} from 'react-bootstrap'
 
 const SecretModal = (props) => {
@@ -24,7 +23,7 @@ const SecretModal = (props) => {
                     style={{marginLeft: '0.1rem', marginRight: '0.1rem'}}
                     onClick={() => setShow(true)}
             >
-                <MdVpnKey/>
+                {props.icon}
             </Button>
 
             <Modal show={show} onHide={handleClose}>

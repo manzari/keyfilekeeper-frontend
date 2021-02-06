@@ -4,7 +4,8 @@ import SecretModal from "./SecretModal";
 import ObjectsTable from "./ObjectsTable";
 import {createUser, deleteUser, patchUser, requestUsers} from "../actions/users";
 import {connect} from "react-redux";
-
+import SpinnerOverlay from "./SpinnerOverlay";
+import {RiLockPasswordFill} from "react-icons/ri"
 
 const mapStateToProps = state => ({
     users: state.users.data,
@@ -66,6 +67,7 @@ const Admin = (props) => {
                 additionalActions={
                     (user) =>
                         <SecretModal
+                            icon={<RiLockPasswordFill/>}
                             object={user}
                             patchAction={(secret) => props.patchUser({...user, password: secret})}
                             patchStatus={props.patchStatus}

@@ -3,22 +3,22 @@ import {BsEyeFill} from 'react-icons/bs'
 import {Button, Modal} from 'react-bootstrap'
 import copy from 'copy-to-clipboard';
 
-const SecretModal = (props) => {
+const TokenModal = (props) => {
     const [show, setShow] = useState(false);
-    const inputId = 'tokenInput' + props.token.id;
+    const inputId = 'tokenInput' + props.object.id;
 
     const handleShow = () => {
         setShow(true);
-        props.requestTokenSecret();
+        props.requestTokenSecret(props.object.id);
     }
 
     const handleClose = () => {
         setShow(false);
-        props.cleanTokenSecret();
+        props.cleanTokenSecret(props.object.id);
     }
 
     const copyToClipboard = () => {
-        copy(props.token.token, {message: 'Press #{key} to copy'});
+        copy(props.object.token, {message: 'Press #{key} to copy'});
     }
 
     return (
@@ -33,7 +33,7 @@ const SecretModal = (props) => {
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Token {props.token.id}</Modal.Title>
+                    <Modal.Title>Token {props.object.id}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <h6>This token is long lived and can be used to access your volumes secrets.
@@ -41,7 +41,7 @@ const SecretModal = (props) => {
                     <input
                         id={inputId}
                         type="textarea"
-                        value={props.token.token}
+                        value={props.object.token}
                         style={{width: '100%'}}
                         disabled={true}
                     />
@@ -59,4 +59,4 @@ const SecretModal = (props) => {
     );
 }
 
-export default SecretModal
+export default TokenModal

@@ -1,21 +1,26 @@
 import {createAction} from 'redux-api-middleware'
 
-export const requestTokens = () => (
+export const requestTokens = (volumeId) => (
     createAction({
-        endpoint: window.apiUrl + '/tokens',
+        endpoint: window.apiUrl + '/tokens/volume/' + volumeId,
         method: 'GET',
         headers: {'Content-Type': 'application/json'},
         types: [
             {
                 type: 'GET_TOKENS_REQUEST',
+                meta: {volumeId: volumeId}
             },
             {
                 type: 'GET_TOKENS_SUCCESS',
-                payload: (action, state, res) => res.json()
+                payload: (action, state, res) => res.json(),
+                meta: {volumeId: volumeId}
             },
             {
                 type: 'GET_TOKENS_FAILURE',
-                meta: (action, state, res) => ({httpCode: res.status})
+                meta: (action, state, res) => ({
+                    httpCode: res.status,
+                    volumeId: volumeId
+                })
             },
         ]
     })
@@ -54,24 +59,27 @@ export const cleanTokenSecret = (id) => (
     }
 )
 
-export const createToken = () => (
+export const createToken = (volumeId) => (
     createAction({
         endpoint: window.apiUrl + '/tokens',
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({}, null),
+        body: JSON.stringify({volumeId: volumeId}, null),
         types: [
             {
-                type: 'CREATE_TOKEN_REQUEST'
+                type: 'CREATE_TOKEN_REQUEST',
+                meta: {volumeId: volumeId}
             },
             {
                 type: 'CREATE_TOKEN_SUCCESS',
-                payload: (action, state, res) => res.json()
+                payload: (action, state, res) => res.json(),
+                meta: {volumeId: volumeId}
             },
             {
                 type: 'CREATE_TOKEN_FAILURE',
                 meta: (action, state, res) => ({
-                    httpCode: res.status
+                    httpCode: res.status,
+                    volumeId: volumeId
                 })
             },
         ]

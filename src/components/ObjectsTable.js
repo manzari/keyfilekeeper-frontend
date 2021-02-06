@@ -99,6 +99,14 @@ const ObjectsTable = (props) => {
                 </td>
             )
         }
+        if (meta.type === 'datetime') {
+            console.log(fieldValue)
+            return (
+                <td key={tdElementKey}>
+                    {fieldValue.stringValue}
+                </td>
+            )
+        }
         if (meta.editable === true) {
             return (
                 <td key={tdElementKey}>
@@ -193,16 +201,20 @@ const ObjectsTable = (props) => {
     return (
         <>
             {newButton()}
-            <Table borderless hover size="sm">
-                <thead>
-                <tr>
-                    {columns(props.objectMeta)}
-                </tr>
-                </thead>
-                <tbody>
-                {rows(props.objectsToDisplay, props.objectMeta)}
-                </tbody>
-            </Table>
+            {
+                props.objectsToDisplay.length === 0
+                    ? <p>No {props.objectMeta.name} to display.</p>
+                    : <Table borderless hover size="sm">
+                        <thead>
+                        <tr>
+                            {columns(props.objectMeta)}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {rows(props.objectsToDisplay, props.objectMeta)}
+                        </tbody>
+                    </Table>
+            }
         </>
     )
 }
